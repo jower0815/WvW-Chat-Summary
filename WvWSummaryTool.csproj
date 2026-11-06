@@ -9,6 +9,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="data\wvw-*.json" />
+    <EmbeddedResource Include="data\maps\*.png;data\maps\*.jpg" />
     <Compile Remove="tests\**\*.cs" />
   </ItemGroup>
 

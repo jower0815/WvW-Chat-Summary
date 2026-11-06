@@ -6,6 +6,12 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="..\HistoryScanner.cs" Link="HistoryScanner.cs" />
+    <Compile Include="..\FightHistory.cs" Link="FightHistory.cs" />
+    <Compile Include="..\FightLocationResolver.cs" Link="FightLocationResolver.cs" />
+    <EmbeddedResource Include="..\data\wvw-*.json" Link="data\%(Filename)%(Extension)" />
+    <Compile Include="..\AppSettings.cs" Link="AppSettings.cs" />
+    <Compile Include="..\LogFinder.cs" Link="LogFinder.cs" />
     <Compile Include="..\EvtcParser.cs" Link="EvtcParser.cs" />
     <Compile Include="..\Models.cs" Link="Models.cs" />
     <Compile Include="..\SummaryFormatter.cs" Link="SummaryFormatter.cs" />

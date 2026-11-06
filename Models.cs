@@ -5,7 +5,14 @@ internal sealed record SpecializationDamage(string Profession, int Players, long
 internal sealed record TeamSummary(string Color, int Players, int Deaths, int Downs, long Damage,
     bool IsPlayerTeam, IReadOnlyList<DamageDealer> TopDamageDealers,
     IReadOnlyList<SpecializationDamage> TopSpecializations);
-internal sealed record FightSummary(string SourceFile, TimeSpan Duration, IReadOnlyList<TeamSummary> Teams);
+internal sealed record FightSummary(string SourceFile, TimeSpan Duration, IReadOnlyList<TeamSummary> Teams,
+    FightLocation? Location = null, int HistoryVersion = 0);
+internal sealed record FightTrackPoint(double Seconds, double X, double Y);
+internal sealed record FightLocation(uint MapId, string MapCode, string? NearbyObjective = null,
+    IReadOnlyList<FightTrackPoint>? Track = null, string? TrackSource = null)
+{
+    public string Label => NearbyObjective is null ? MapCode : $"{MapCode} ~ {NearbyObjective}";
+}
 
 internal sealed class Agent
 {

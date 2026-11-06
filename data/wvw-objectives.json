@@ -1,0 +1,739 @@
+[
+  {
+    "id": "96-35",
+    "name": "Redbriar",
+    "map_id": 96,
+    "type": "Tower",
+    "coord": [
+      13688.9,
+      13339,
+      -1892.9
+    ]
+  },
+  {
+    "id": "95-35",
+    "name": "Bluebriar",
+    "map_id": 95,
+    "type": "Tower",
+    "coord": [
+      6520.89,
+      13979,
+      -1892.9
+    ]
+  },
+  {
+    "id": "96-32",
+    "name": "Askalion Hills",
+    "map_id": 96,
+    "type": "Keep",
+    "coord": [
+      15252.2,
+      12880.7,
+      -3107.91
+    ]
+  },
+  {
+    "id": "95-32",
+    "name": "Shadaran Hills",
+    "map_id": 95,
+    "type": "Keep",
+    "coord": [
+      8084.25,
+      13520.7,
+      -3107.91
+    ]
+  },
+  {
+    "id": "96-33",
+    "name": "Ascension Bay",
+    "map_id": 96,
+    "type": "Keep",
+    "coord": [
+      13035.1,
+      12956.6,
+      -300.694
+    ]
+  },
+  {
+    "id": "95-33",
+    "name": "Dreadfall Bay",
+    "map_id": 95,
+    "type": "Keep",
+    "coord": [
+      5867.06,
+      13596.6,
+      -300.694
+    ]
+  },
+  {
+    "id": "96-38",
+    "name": "Woodhaven",
+    "map_id": 96,
+    "type": "Tower",
+    "coord": [
+      13444.8,
+      12078.2,
+      -3758.65
+    ]
+  },
+  {
+    "id": "95-38",
+    "name": "Sunnyhill",
+    "map_id": 95,
+    "type": "Tower",
+    "coord": [
+      6276.77,
+      12718.2,
+      -3758.65
+    ]
+  },
+  {
+    "id": "96-39",
+    "name": "The Spiritholme",
+    "map_id": 96,
+    "type": "Camp",
+    "coord": [
+      14082.8,
+      11228.4,
+      -3676.89
+    ]
+  },
+  {
+    "id": "95-39",
+    "name": "The Titanpaw",
+    "map_id": 95,
+    "type": "Camp",
+    "coord": [
+      6914.78,
+      11868.4,
+      -3676.89
+    ]
+  },
+  {
+    "id": "96-37",
+    "name": "Garrison",
+    "map_id": 96,
+    "type": "Keep",
+    "coord": [
+      14056.6,
+      12430.9,
+      -2800.76
+    ]
+  },
+  {
+    "id": "95-37",
+    "name": "Garrison",
+    "map_id": 95,
+    "type": "Keep",
+    "coord": [
+      6888.59,
+      13070.9,
+      -2800.76
+    ]
+  },
+  {
+    "id": "96-53",
+    "name": "Redvale Refuge",
+    "map_id": 96,
+    "type": "Camp",
+    "coord": [
+      13262.3,
+      13457.1,
+      -687.909
+    ]
+  },
+  {
+    "id": "95-53",
+    "name": "Bluevale Refuge",
+    "map_id": 95,
+    "type": "Camp",
+    "coord": [
+      6094.29,
+      14097.1,
+      -687.909
+    ]
+  },
+  {
+    "id": "96-52",
+    "name": "Godslore",
+    "map_id": 96,
+    "type": "Camp",
+    "coord": [
+      13211.9,
+      12195.7,
+      -46.1562
+    ]
+  },
+  {
+    "id": "95-52",
+    "name": "Faithleap",
+    "map_id": 95,
+    "type": "Camp",
+    "coord": [
+      6043.87,
+      12835.7,
+      -46.1562
+    ]
+  },
+  {
+    "id": "96-51",
+    "name": "Stargrove",
+    "map_id": 96,
+    "type": "Camp",
+    "coord": [
+      15025.5,
+      12168.3,
+      -1533.33
+    ]
+  },
+  {
+    "id": "95-51",
+    "name": "Foghaven",
+    "map_id": 95,
+    "type": "Camp",
+    "coord": [
+      7857.45,
+      12808.3,
+      -1533.33
+    ]
+  },
+  {
+    "id": "96-34",
+    "name": "Champion's Demesne",
+    "map_id": 96,
+    "type": "Camp",
+    "coord": [
+      14083.2,
+      14033.2,
+      -307.1
+    ]
+  },
+  {
+    "id": "95-34",
+    "name": "Hero's Lodge",
+    "map_id": 95,
+    "type": "Camp",
+    "coord": [
+      6915.25,
+      14673.2,
+      -307.1
+    ]
+  },
+  {
+    "id": "96-36",
+    "name": "Greenlake",
+    "map_id": 96,
+    "type": "Tower",
+    "coord": [
+      14581,
+      13409.9,
+      -1821.91
+    ]
+  },
+  {
+    "id": "95-36",
+    "name": "Redlake",
+    "map_id": 95,
+    "type": "Tower",
+    "coord": [
+      7413.05,
+      14049.9,
+      -1821.91
+    ]
+  },
+  {
+    "id": "96-50",
+    "name": "Greenwater Lowlands",
+    "map_id": 96,
+    "type": "Camp",
+    "coord": [
+      15015.7,
+      13502.9,
+      -10.3619
+    ]
+  },
+  {
+    "id": "95-50",
+    "name": "Redwater Lowlands",
+    "map_id": 95,
+    "type": "Camp",
+    "coord": [
+      7847.75,
+      14142.9,
+      -10.3619
+    ]
+  },
+  {
+    "id": "96-40",
+    "name": "Dawn's Eyrie",
+    "map_id": 96,
+    "type": "Tower",
+    "coord": [
+      14683.4,
+      12030.3,
+      -4839.9
+    ]
+  },
+  {
+    "id": "95-40",
+    "name": "Cragtop",
+    "map_id": 95,
+    "type": "Tower",
+    "coord": [
+      7515.42,
+      12670.3,
+      -4839.9
+    ]
+  },
+  {
+    "id": "968-78",
+    "name": "Overgrown Fane",
+    "map_id": 968,
+    "type": "Keep",
+    "coord": [
+      7518.5,
+      9107.75,
+      -6106
+    ]
+  },
+  {
+    "id": "968-88",
+    "name": "Arid Fortress",
+    "map_id": 968,
+    "type": "Keep",
+    "coord": [
+      6415.72,
+      10635.7,
+      -6814
+    ]
+  },
+  {
+    "id": "968-89",
+    "name": "Tytone Perch",
+    "map_id": 968,
+    "type": "Tower",
+    "coord": [
+      8111.44,
+      9658.89,
+      -4842.11
+    ]
+  },
+  {
+    "id": "968-79",
+    "name": "Thunder Hollow",
+    "map_id": 968,
+    "type": "Keep",
+    "coord": [
+      8610.49,
+      10626.4,
+      -6017
+    ]
+  },
+  {
+    "id": "968-77",
+    "name": "Inferno's Needle",
+    "map_id": 968,
+    "type": "Tower",
+    "coord": [
+      7527.71,
+      10619.2,
+      -6189.76
+    ]
+  },
+  {
+    "id": "968-87",
+    "name": "Stonegaze Spire",
+    "map_id": 968,
+    "type": "Tower",
+    "coord": [
+      6959.79,
+      9665.44,
+      -4828.02
+    ]
+  },
+  {
+    "id": "38-11",
+    "name": "Aldon's Ledge",
+    "map_id": 38,
+    "type": "Tower",
+    "coord": [
+      9413.84,
+      14792.8,
+      -1313.37
+    ]
+  },
+  {
+    "id": "38-1",
+    "name": "Overlook",
+    "map_id": 38,
+    "type": "Keep",
+    "coord": [
+      10763.6,
+      13655.8,
+      -2464.89
+    ]
+  },
+  {
+    "id": "38-15",
+    "name": "Langor Gulch",
+    "map_id": 38,
+    "type": "Tower",
+    "coord": [
+      11452.7,
+      15490.7,
+      -2246.3
+    ]
+  },
+  {
+    "id": "38-3",
+    "name": "Lowlands",
+    "map_id": 38,
+    "type": "Keep",
+    "coord": [
+      9604.47,
+      15129.9,
+      -906.09
+    ]
+  },
+  {
+    "id": "38-17",
+    "name": "Mendon's Gap",
+    "map_id": 38,
+    "type": "Tower",
+    "coord": [
+      10256.6,
+      13514.4,
+      -2015.34
+    ]
+  },
+  {
+    "id": "38-7",
+    "name": "Danelon Passage",
+    "map_id": 38,
+    "type": "Camp",
+    "coord": [
+      11037.9,
+      15556.2,
+      -483.931
+    ]
+  },
+  {
+    "id": "38-9",
+    "name": "Stonemist Castle",
+    "map_id": 38,
+    "type": "Castle",
+    "coord": [
+      10606.3,
+      14580.3,
+      -1536.93
+    ]
+  },
+  {
+    "id": "38-5",
+    "name": "Pangloss Rise",
+    "map_id": 38,
+    "type": "Camp",
+    "coord": [
+      11279.8,
+      13736.8,
+      -835.691
+    ]
+  },
+  {
+    "id": "38-21",
+    "name": "Durios Gulch",
+    "map_id": 38,
+    "type": "Tower",
+    "coord": [
+      11156.4,
+      14527.8,
+      -1622.95
+    ]
+  },
+  {
+    "id": "38-20",
+    "name": "Veloka Slope",
+    "map_id": 38,
+    "type": "Tower",
+    "coord": [
+      11090.4,
+      13488.2,
+      -2569.23
+    ]
+  },
+  {
+    "id": "38-14",
+    "name": "Klovan Gully",
+    "map_id": 38,
+    "type": "Tower",
+    "coord": [
+      10171.8,
+      15081.8,
+      -495.673
+    ]
+  },
+  {
+    "id": "38-13",
+    "name": "Jerrifer's Slough",
+    "map_id": 38,
+    "type": "Tower",
+    "coord": [
+      9805.96,
+      15406.4,
+      -1659.98
+    ]
+  },
+  {
+    "id": "38-6",
+    "name": "Speldan Clearcut",
+    "map_id": 38,
+    "type": "Camp",
+    "coord": [
+      9841.05,
+      13545.8,
+      -508.295
+    ]
+  },
+  {
+    "id": "38-2",
+    "name": "Valley",
+    "map_id": 38,
+    "type": "Keep",
+    "coord": [
+      11496.5,
+      15120.6,
+      -1786.97
+    ]
+  },
+  {
+    "id": "38-12",
+    "name": "Wildcreek Run",
+    "map_id": 38,
+    "type": "Tower",
+    "coord": [
+      9906.21,
+      14624.6,
+      -1014.99
+    ]
+  },
+  {
+    "id": "38-16",
+    "name": "Quentin Lake",
+    "map_id": 38,
+    "type": "Tower",
+    "coord": [
+      10850.1,
+      15224.4,
+      -1052.29
+    ]
+  },
+  {
+    "id": "38-22",
+    "name": "Bravost Escarpment",
+    "map_id": 38,
+    "type": "Tower",
+    "coord": [
+      11766.3,
+      14793.5,
+      -2133.39
+    ]
+  },
+  {
+    "id": "38-19",
+    "name": "Ogrewatch Cut",
+    "map_id": 38,
+    "type": "Tower",
+    "coord": [
+      10965.2,
+      14054.6,
+      -1847.47
+    ]
+  },
+  {
+    "id": "38-4",
+    "name": "Golanta Clearing",
+    "map_id": 38,
+    "type": "Camp",
+    "coord": [
+      10202.6,
+      15437.1,
+      -79.961
+    ]
+  },
+  {
+    "id": "38-8",
+    "name": "Umberglade Woods",
+    "map_id": 38,
+    "type": "Camp",
+    "coord": [
+      11565.5,
+      14444.8,
+      -302.91
+    ]
+  },
+  {
+    "id": "38-10",
+    "name": "Rogue's Quarry",
+    "map_id": 38,
+    "type": "Camp",
+    "coord": [
+      9570.97,
+      14423.2,
+      -700
+    ]
+  },
+  {
+    "id": "38-18",
+    "name": "Anzalias Pass",
+    "map_id": 38,
+    "type": "Tower",
+    "coord": [
+      10188.8,
+      14082.3,
+      -1657.95
+    ]
+  },
+  {
+    "id": "1099-99",
+    "name": "Hamm's Lab",
+    "map_id": 1099,
+    "type": "Camp",
+    "coord": [
+      10743.8,
+      9492.51,
+      -2955
+    ]
+  },
+  {
+    "id": "1099-100",
+    "name": "Bauer Farmstead",
+    "map_id": 1099,
+    "type": "Camp",
+    "coord": [
+      11891.4,
+      11286.6,
+      -4736.73
+    ]
+  },
+  {
+    "id": "1099-101",
+    "name": "McLain's Encampment",
+    "map_id": 1099,
+    "type": "Camp",
+    "coord": [
+      9584.13,
+      11316.1,
+      -3877.82
+    ]
+  },
+  {
+    "id": "1099-102",
+    "name": "O'del Academy",
+    "map_id": 1099,
+    "type": "Tower",
+    "coord": [
+      9831.82,
+      9507.67,
+      -2897.5
+    ]
+  },
+  {
+    "id": "1099-104",
+    "name": "Eternal Necropolis",
+    "map_id": 1099,
+    "type": "Tower",
+    "coord": [
+      11739.2,
+      9654.33,
+      -4452.81
+    ]
+  },
+  {
+    "id": "1099-105",
+    "name": "Crankshaft Depot",
+    "map_id": 1099,
+    "type": "Tower",
+    "coord": [
+      11256.9,
+      11551.1,
+      -5219.09
+    ]
+  },
+  {
+    "id": "1099-106",
+    "name": "Blistering Undercroft",
+    "map_id": 1099,
+    "type": "Keep",
+    "coord": [
+      9327.72,
+      10634.1,
+      -3714.37
+    ]
+  },
+  {
+    "id": "1099-109",
+    "name": "Roy's Refuge",
+    "map_id": 1099,
+    "type": "Camp",
+    "coord": [
+      12097.5,
+      10018.3,
+      -1025.05
+    ]
+  },
+  {
+    "id": "1099-110",
+    "name": "Parched Outpost",
+    "map_id": 1099,
+    "type": "Tower",
+    "coord": [
+      10243.9,
+      11331.3,
+      -5557.72
+    ]
+  },
+  {
+    "id": "1099-113",
+    "name": "Stoic Rampart",
+    "map_id": 1099,
+    "type": "Keep",
+    "coord": [
+      10776.6,
+      10120.4,
+      -4120.01
+    ]
+  },
+  {
+    "id": "1099-114",
+    "name": "Osprey's Palace",
+    "map_id": 1099,
+    "type": "Keep",
+    "coord": [
+      12203,
+      10706.2,
+      -4254.64
+    ]
+  },
+  {
+    "id": "1099-115",
+    "name": "Boettiger's Hideaway",
+    "map_id": 1099,
+    "type": "Camp",
+    "coord": [
+      9310.12,
+      10008,
+      -1283.35
+    ]
+  },
+  {
+    "id": "1099-116",
+    "name": "Dustwhisper Well",
+    "map_id": 1099,
+    "type": "Camp",
+    "coord": [
+      10754.8,
+      11854.4,
+      -2801.74
+    ]
+  }
+]

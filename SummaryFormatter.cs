@@ -11,8 +11,13 @@ internal static class SummaryFormatter
     {
         var duration = $"{(int)fight.Duration.TotalMinutes}:{fight.Duration.Seconds:00}";
         var sizes = string.Join(" v ", fight.Teams.Select(team => $"{team.Players}{TeamCode(team.Color)}"));
-        var parts = fight.Teams.Select(team => $"{GermanColors.GetValueOrDefault(team.Color, team.Color)}: {team.Deaths}K/{team.Downs}Down/{FormatDamage(team.Damage)}");
-        return $"{duration} | {sizes} | {string.Join(" | ", parts)}";
+        var parts = fight.Teams.Select(team => $"{GermanColors.GetValueOrDefault(team.Color, team.Color)}: {team.Deaths} deaths/{team.Downs}Down/{FormatDamage(team.Damage)}");
+        var summary = $"{duration} | {sizes} | {string.Join(" | ", parts)}";
+        if (fight.Location is not { } location) return summary;
+        var withPlace = $"{location.Label} | {summary}";
+        if (withPlace.Length <= 199) return withPlace;
+        var withMap = $"{location.MapCode} | {summary}";
+        return withMap.Length <= 199 ? withMap : summary;
     }
 
     public static string FormatTopDamage(FightSummary fight, string color)

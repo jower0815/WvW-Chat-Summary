@@ -221,7 +221,8 @@ internal static class EvtcParser
                     topPlayers, topSpecializations);
             }).ToArray();
         if (teams.Length < 2) throw new InvalidDataException("Im Log konnten nicht mindestens zwei WvW-Teams erkannt werden.");
-        return new FightSummary(path, TimeSpan.FromMilliseconds(end >= start ? end - start : 0), teams);
+        var location = FightLocationResolver.Resolve(events, agents, povAddress, start, end);
+        return new FightSummary(path, TimeSpan.FromMilliseconds(end >= start ? end - start : 0), teams, location, HistoryVersion: 1);
     }
 
     private static CombatEvent ReadEvent(byte[] bytes) => new(
