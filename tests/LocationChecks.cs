@@ -11,6 +11,18 @@ internal static class LocationChecks
         };
         FightLocation? Resolve(List<CombatEvent> events, ulong pov = 1) =>
             FightLocationResolver.Resolve(events, agents, pov, 1000, 9000);
+        foreach (var id in new uint[] { 1651, 1652, 1654 })
+        {
+            var beta = Resolve([Map(id), Position(1, 1000, -30720, 43008),
+                Position(1, 2000, 0, 0), Position(1, 3000, 30720, -43008)]);
+            Require(beta?.Track?.Count == 3 && beta.NearbyObjective is null, "beta route without objective label");
+            Require(beta!.Track![0].X == 0 && beta.Track[0].Y == 0
+                && beta.Track[1].X == 0.5 && beta.Track[1].Y == 0.5
+                && beta.Track[2].X == 1 && beta.Track[2].Y == 1, "beta north-up image projection");
+            var map = FightLocationResolver.GetMapDisplay(id);
+            Require(map is not null && map.Markers.Count == 0, "beta map without target markers");
+            Require(FightLocationResolver.BackgroundMapId(id) == 1651, "shared beta background");
+        }
         foreach (var (map, code, x, y, place) in new[]
         {
             (38U, "EBG", 2695.2f, -5911.2f, "SM"),

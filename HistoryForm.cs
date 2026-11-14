@@ -5,14 +5,16 @@ internal sealed class HistoryForm : Form
     private readonly ListBox _list = new() { Dock = DockStyle.Fill, HorizontalScrollbar = true };
     private readonly TextBox _preview = new() { Dock = DockStyle.Fill, ReadOnly = true };
     private readonly Label _status = new() { AutoSize = true };
-    private readonly FightMapControl _map = new();
+    private readonly FightMapControl _map;
     private readonly TrackBar _timeline = new() { Dock = DockStyle.Fill, Minimum = 0, Maximum = 1, TickStyle = TickStyle.None, Enabled = false };
-    private readonly Label _time = new() { AutoSize = true, Text = "Gesamter Verlauf" };
+    private readonly Label _time = new() { AutoSize = true };
     private FightSummary? _displayedFight;
 
-    public HistoryForm(FightHistory history)
+    public HistoryForm(FightHistory history, AppSettings settings)
     {
-        Text = "Fight-History";
+        _map = new FightMapControl(settings);
+        _time.Text = settings.T("Gesamter Verlauf", "Full track");
+        Text = settings.T("Fight-History", "Fight history");
         Size = new Size(1180, 760);
         MinimumSize = new Size(980, 620);
         StartPosition = FormStartPosition.CenterParent;
@@ -50,24 +52,24 @@ internal sealed class HistoryForm : Form
             _timeline.Maximum = (int)Math.Clamp(Math.Ceiling(last), 1, int.MaxValue);
             _timeline.Enabled = last > 0;
             _timeline.Value = _timeline.Maximum;
-            _time.Text = last > 0 ? $"Gesamter Verlauf · {_timeline.Maximum} Sekunden · Regler zum Zurückspulen"
-                : "Keine Bewegung aufgezeichnet";
+            _time.Text = last > 0 ? settings.T($"Gesamter Verlauf · {_timeline.Maximum} Sekunden · Regler zum Zurückspulen", $"Full track · {_timeline.Maximum} seconds · Drag the slider to rewind")
+                : settings.T("Keine Bewegung aufgezeichnet", "No movement recorded");
             _map.ShowFight(entry.Fight);
         };
         layout.Controls.Add(_preview, 0, 2);
         var actions = new FlowLayoutPanel { Dock = DockStyle.Fill, AutoSize = true };
-        AddButton("Zusammenfassung kopieren", SummaryFormatter.Format);
+        AddButton(settings.T("Zusammenfassung kopieren", "Copy summary"), SummaryFormatter.Format);
         foreach (var (color, label) in new[] { ("Red", "Rot"), ("Green", "Grün"), ("Blue", "Blau") })
         {
-            AddButton($"Top 5 Klassen {label}", f => SummaryFormatter.FormatTopSpecializations(f, color));
-            AddButton($"Top 5 Einzelspieler {label}", f => SummaryFormatter.FormatTopDamage(f, color));
+            AddButton(settings.T($"Top 5 Klassen {label}", $"Top 5 classes ({color})"), f => SummaryFormatter.FormatTopSpecializations(f, color));
+            AddButton(settings.T($"Top 5 Einzelspieler {label}", $"Top 5 players ({color})"), f => SummaryFormatter.FormatTopDamage(f, color));
         }
         layout.Controls.Add(actions, 0, 3);
         layout.Controls.Add(_status, 0, 4);
         Controls.Add(layout);
         void RefreshHistory(object? sender, EventArgs e)
         {
-            heading.Text = $"Letzte {history.Limit} eingelesene Fights – neueste zuerst";
+            heading.Text = settings.T($"Letzte {history.Limit} eingelesene Fights – neueste zuerst", $"Last {history.Limit} imported fights – newest first");
             var selected = (_list.SelectedItem as FightHistoryEntry)?.Fight.SourceFile;
             _list.BeginUpdate();
             _list.Items.Clear();
@@ -76,13 +78,13 @@ internal sealed class HistoryForm : Form
             if (_list.Items.Count > 0) _list.SelectedIndex = Math.Max(0, index);
             _list.EndUpdate();
             foreach (Control button in actions.Controls) button.Enabled = _list.Items.Count > 0;
-            if (_list.Items.Count > 0) _status.Text = $"{_list.Items.Count} Fights im Verlauf.";
+            if (_list.Items.Count > 0) _status.Text = settings.T($"{_list.Items.Count} Fights im Verlauf.", $"{_list.Items.Count} fights in history.");
         }
         RefreshHistory(null, EventArgs.Empty);
         history.Changed += RefreshHistory;
         FormClosed += (_, _) => history.Changed -= RefreshHistory;
         if (_list.Items.Count > 0) _list.SelectedIndex = 0;
-        else _status.Text = "Noch keine Fights gespeichert. Der Logordner wird automatisch durchsucht.";
+        else _status.Text = settings.T("Noch keine Fights gespeichert. Der Logordner wird automatisch durchsucht.", "No fights saved yet. The log folder is scanned automatically.");
 
         void AddButton(string label, Func<FightSummary, string> format)
         {
@@ -93,12 +95,12 @@ internal sealed class HistoryForm : Form
                 try
                 {
                     var text = format(entry.Fight);
-                    if (text.Length > 199) throw new InvalidOperationException("Die Chatzeile ist zu lang.");
+                    if (text.Length > 199) throw new InvalidOperationException(settings.T("Die Chatzeile ist zu lang.", "The chat line is too long."));
                     Clipboard.SetText(text);
                     _preview.Text = text;
-                    _status.Text = $"Kopiert ({text.Length}/199 Zeichen).";
+                    _status.Text = settings.T($"Kopiert ({text.Length}/199 Zeichen).", $"Copied ({text.Length}/199 characters).");
                 }
-                catch (Exception ex) { _status.Text = "Fehler: " + ex.Message; }
+                catch (Exception ex) { _status.Text = settings.T("Fehler: ", "Error: ") + ex.Message; }
             };
             actions.Controls.Add(button);
         }

@@ -6,6 +6,8 @@ namespace WvWSummaryTool;
 
 internal static class EvtcParser
 {
+    private const byte StateBuffRemoveAll = 72;
+    private const byte BuffRemoveAll = 1;
     private const int AgentSize = 96;
     private const int SkillSize = 68;
     private const int EventSize = 64;
@@ -95,6 +97,7 @@ internal static class EvtcParser
                 {
                     Address = address,
                     AccountName = account,
+                    CharacterName = strings.FirstOrDefault() ?? "",
                     Subgroup = subgroup,
                     Profession = professionName
                 };
@@ -179,6 +182,17 @@ internal static class EvtcParser
 
         foreach (var evt in events)
         {
+            if (pov is { Team: not "Unknown" } &&
+                (evt.StateChange == StateBuffRemoveAll || (evt.StateChange == StateNone && evt.BuffRemove == BuffRemoveAll)) &&
+                evt.SkillId is 720 or 721 or 722 or 723 or 727 or 736 or 737 or 738 or 742 or 791 or 861 or 19426 or 26766 or 27705 &&
+                Math.Max(evt.Value, evt.BuffDamage) >= 50 &&
+                (evt.SkillId != 720 || evt.SourceAgent != evt.DestinationAgent) &&
+                agents.TryGetValue(evt.SourceAgent, out var holder) && holder.Team == pov.Team &&
+                agents.TryGetValue(evt.DestinationAgent, out var remover) && remover.Team == pov.Team)
+            {
+                remover.Cleanses++;
+            }
+
             if ((evt.StateChange == StateDead || evt.StateChange == StateDown) &&
                 instanceAgents.TryGetValue(evt.SourceInstanceId, out var victim) && victim.Team != "Unknown")
             {
@@ -222,7 +236,23 @@ internal static class EvtcParser
             }).ToArray();
         if (teams.Length < 2) throw new InvalidDataException("Im Log konnten nicht mindestens zwei WvW-Teams erkannt werden.");
         var location = FightLocationResolver.Resolve(events, agents, povAddress, start, end);
-        return new FightSummary(path, TimeSpan.FromMilliseconds(end >= start ? end - start : 0), teams, location, HistoryVersion: 1);
+        CleanseSummary? cleanses = null;
+        if (pov is { Team: not "Unknown" })
+        {
+            var players = agents.Values.Where(agent => agent.Cleanses > 0)
+                .GroupBy(agent => agent.AccountName.StartsWith(':') ? agent.AccountName : agent.Address.ToString("X"))
+                .Select(group =>
+                {
+                    var player = group.OrderByDescending(agent => agent.Cleanses).First();
+                    var name = string.IsNullOrWhiteSpace(player.CharacterName) ? player.Profession : player.CharacterName;
+                    return new CleansePlayer(name, group.Sum(agent => agent.Cleanses));
+                }).ToArray();
+            cleanses = new CleanseSummary(players.Sum(player => player.Cleanses), players
+                .OrderByDescending(player => player.Cleanses).ThenBy(player => player.Name, StringComparer.Ordinal)
+                .Take(5).ToArray());
+        }
+        return new FightSummary(path, TimeSpan.FromMilliseconds(end >= start ? end - start : 0), teams, location,
+            HistoryVersion: 2) { Cleanses = cleanses };
     }
 
     private static CombatEvent ReadEvent(byte[] bytes) => new(

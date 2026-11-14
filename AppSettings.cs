@@ -6,13 +6,21 @@ internal sealed record AppSettings
 {
     public const int DefaultHistoryLimit = 100;
     public const int MaximumHistoryLimit = 1000;
+    public string Language { get; init; } = "de";
+    public string T(string german, string english) => Language == "en" ? english : german;
+
+    public const int DefaultScanIntervalSeconds = 10;
+    public const int MinimumScanIntervalSeconds = 1;
+    public const int MaximumScanIntervalSeconds = 3600;
+    public int ScanIntervalSeconds { get; init; } = DefaultScanIntervalSeconds;
+
     public int HistoryLimit { get; init; } = DefaultHistoryLimit;
     public string LogDirectory { get; init; } = "";
     public uint Hotkey { get; init; } = 0x77;
     public uint Modifiers { get; init; }
-    public string HotkeyLabel => ((Modifiers & 2) != 0 ? "Strg+" : "")
+    public string HotkeyLabel => ((Modifiers & 2) != 0 ? T("Strg+", "Ctrl+") : "")
         + ((Modifiers & 1) != 0 ? "Alt+" : "")
-        + ((Modifiers & 4) != 0 ? "Umschalt+" : "") + $"F{Hotkey - 0x6F}";
+        + ((Modifiers & 4) != 0 ? T("Umschalt+", "Shift+") : "") + $"F{Hotkey - 0x6F}";
 
     public static string FilePath => Path.Combine(
         Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "WvWSummaryTool", "settings.json");
@@ -27,7 +35,12 @@ internal sealed record AppSettings
             if (settings is null || settings.LogDirectory is null || settings.Hotkey < 0x70
                 || settings.Hotkey > 0x87 || settings.Hotkey == 0x7B || (settings.Modifiers & ~7U) != 0)
                 throw new InvalidDataException("Ungültige Einstellungen.");
-            return settings with { HistoryLimit = Math.Clamp(settings.HistoryLimit, 1, MaximumHistoryLimit) };
+            return settings with
+            {
+                HistoryLimit = Math.Clamp(settings.HistoryLimit, 1, MaximumHistoryLimit),
+                ScanIntervalSeconds = Math.Clamp(settings.ScanIntervalSeconds, MinimumScanIntervalSeconds, MaximumScanIntervalSeconds),
+                Language = settings.Language == "en" ? "en" : "de"
+            };
         }
         catch (Exception ex) when (ex is IOException or InvalidDataException or UnauthorizedAccessException or JsonException)
         {

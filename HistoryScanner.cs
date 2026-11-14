@@ -30,7 +30,8 @@ internal static class HistoryScanner
                 var length = file.Length;
                 if (DateTimeOffset.UtcNow - time < TimeSpan.FromSeconds(3)) continue;
                 if (retained.TryGetValue(file.FullName, out var entry)
-                    && entry.LogTime == time && entry.SourceLength == length && entry.Fight.HistoryVersion >= 1)
+                    && entry.LogTime == time && entry.SourceLength == length
+                    && entry.Fight.HistoryVersion >= (FightLocationResolver.IsBetaMap(entry.Fight.Location?.MapId ?? 0) ? 2 : 1))
                 { successful++; continue; }
                 // A writer holding the file open, or a file changing during parsing, is retried later.
                 using var readLock = new FileStream(file.FullName, FileMode.Open, FileAccess.Read, FileShare.Read);

@@ -1,5 +1,19 @@
 # WvW location data
 
+## Seared Borderlands beta (2026-11-14)
+
+Map IDs 1651 (green), 1652 (red), and 1654 (blue) use the embedded
+`wvw-beta-maps.json` snapshot from
+https://api.guildwars2.com/v2/maps?ids=1651,1652,1654&lang=en.
+All three use the shared wiki image:
+https://wiki.guildwars2.com/images/c/c1/Seared_Borderlands_map.jpg
+(2560 × 3584, © ArenaNet; contains existing developer annotations).
+The north-up image matches the API map aspect ratio and is projected across the
+API map rectangle. Alignment has been checked with synthetic coordinates, not
+yet calibrated against an actual beta fight.
+No objective data, target markers, or nearby-objective labels are enabled for
+the beta maps. Older beta entries are reimported when their logs remain available.
+
 Public ArenaNet API snapshot retrieved 2026-09-26, embedded in the executable:
 
 - https://api.guildwars2.com/v2/maps?ids=38,94,95,96,1099,968&lang=en

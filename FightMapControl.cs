@@ -9,8 +9,11 @@ internal sealed class FightMapControl : Control
     private MapDisplay? _map;
     private double _seconds = double.MaxValue;
 
-    public FightMapControl()
+    private readonly AppSettings _settings;
+
+    public FightMapControl(AppSettings settings)
     {
+        _settings = settings;
         DoubleBuffered = true;
         ResizeRedraw = true;
         BackColor = Color.FromArgb(24, 29, 35);
@@ -28,10 +31,10 @@ internal sealed class FightMapControl : Control
         _seconds = double.MaxValue;
         if (_location is not null && _map is not null)
         {
-            var id = _location.MapId == 96 ? 95U : _location.MapId;
+            var id = FightLocationResolver.BackgroundMapId(_location.MapId);
             if (!_backgrounds.ContainsKey(id))
             {
-                var extension = id == 968 ? "jpg" : "png";
+                var extension = id is 968 or 1651 ? "jpg" : "png";
                 using var stream = typeof(FightMapControl).Assembly.GetManifestResourceStream($"WvWSummaryTool.data.maps.{id}.{extension}");
                 if (stream is not null)
                 {
@@ -50,12 +53,12 @@ internal sealed class FightMapControl : Control
         g.SmoothingMode = SmoothingMode.AntiAlias;
         if (_map is null || _location is null)
         {
-            TextRenderer.DrawText(g, "Für diesen Fight sind keine Kartendaten verfügbar.", Font,
+            TextRenderer.DrawText(g, _settings.T("Für diesen Fight sind keine Kartendaten verfügbar.", "No map data is available for this fight."), Font,
                 ClientRectangle, ForeColor, TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter | TextFormatFlags.WordBreak);
             return;
         }
         var area = new RectangleF(18, 38, Math.Max(1, Width - 36), Math.Max(1, Height - 100));
-        var imageId = _location.MapId == 96 ? 95U : _location.MapId;
+        var imageId = FightLocationResolver.BackgroundMapId(_location.MapId);
         _backgrounds.TryGetValue(imageId, out var image);
         var ratio = image is null ? _map.Width / _map.Height : (double)image.Width / image.Height;
         if (area.Width / area.Height > ratio)
@@ -86,7 +89,7 @@ internal sealed class FightMapControl : Control
             }
         }
         g.DrawRectangle(Pens.Gray, area.X, area.Y, area.Width, area.Height);
-        TextRenderer.DrawText(g, _location.Label + "  ·  Norden ↑", Font, new Point(10, 10), ForeColor);
+        TextRenderer.DrawText(g, _location.Label + _settings.T("  ·  Norden ↑", "  ·  North ↑"), Font, new Point(10, 10), ForeColor);
         var overlay = g.Save();
         g.SetClip(area, CombineMode.Intersect);
         foreach (var marker in _map.Markers)
@@ -122,10 +125,14 @@ internal sealed class FightMapControl : Control
             g.DrawRectangle(Pens.Black, last.X - 5, last.Y - 5, 10, 10);
         }
         g.Restore(overlay);
-        var caption = track.Length == 0 ? "Keine Positionsdaten im Log / älterer History-Eintrag."
-            : $"{_location.TrackSource} · Grün: Start · Rot: Position/Ende · Cyan: Verlauf";
+        var caption = track.Length == 0 ? _settings.T("Keine Positionsdaten im Log / älterer History-Eintrag.", "No position data in the log / older history entry.")
+            : _settings.T($"{_location.TrackSource} · Grün: Start · Rot: Position/Ende · Cyan: Verlauf", $"{_location.TrackSource} · Green: Start · Red: Position/end · Cyan: Track");
         TextRenderer.DrawText(g, caption, Font, new Rectangle(10, Height - 55, Width - 20, 32), ForeColor, TextFormatFlags.WordBreak);
-        TextRenderer.DrawText(g, image is not null ? "Kartenbild © ArenaNet · Quelle: GW2 Elite Insights" : "Schematische Ansicht",
+        TextRenderer.DrawText(g, image is not null
+            ? FightLocationResolver.IsBetaMap(_location.MapId)
+                ? _settings.T("Beta-Kartenbild © ArenaNet · Quelle: GW2 Wiki", "Beta map image © ArenaNet · Source: GW2 Wiki")
+                : _settings.T("Kartenbild © ArenaNet · Quelle: GW2 Elite Insights", "Map image © ArenaNet · Source: GW2 Elite Insights")
+            : _settings.T("Schematische Ansicht", "Schematic view"),
             Font, new Point(10, Height - 20), Color.LightGray);
     }
 

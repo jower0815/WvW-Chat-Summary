@@ -1,5 +1,10 @@
 # WvW Summary Tool
 
+Seared Borderlands beta maps (green/red/blue) are supported in the History map
+with an offline wiki background and recorded movement. No objective markers or
+nearby-objective names are shown for these beta maps. Existing annotations in
+the wiki's map image are part of the image itself.
+
 Portable Windows companion app for Guild Wars 2. It reads the newest ArcDPS WvW EVTC/ZEVTC log and copies a compact, 199-character-safe fight summary to the clipboard. It never sends input to the game.
 
 ## Usage

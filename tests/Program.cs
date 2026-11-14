@@ -102,6 +102,13 @@ void Check(string name, uint red, uint blue, uint green, string mapping, bool wi
         writer.Write(Event(0, 1, 2, 100, time: 1100));
         writer.Write(Event(0, 2, 3, 200, time: 1200));
         writer.Write(Event(0, 3, 1, 300, time: 1300));
+        writer.Write(Removal(72, 3, 3, 736, 200));
+        writer.Write(Removal(0, 3, 3, 737, 100));
+        writer.Write(Removal(71, 3, 3, 736, 200));
+        writer.Write(Removal(72, 3, 3, 720, 200));
+        writer.Write(Removal(72, 3, 3, 736, 0));
+        writer.Write(Removal(72, 1, 1, 736, 200));
+        writer.Write(Removal(72, 1, 3, 736, 200));
         writer.Write(Event(5, 1, time: 1400));
         writer.Write(Event(4, 1, time: 1500));
         writer.Write(Event(2, 3, time: withLocation ? 4000UL : 2000UL));
@@ -127,6 +134,9 @@ void Check(string name, uint red, uint blue, uint green, string mapping, bool wi
 
     void Verify(FightSummary fight)
     {
+        if (fight.Cleanses is not { Total: 2 } cleanses ||
+            cleanses.TopPlayers.Single() != new CleansePlayer("Player3", 2))
+            throw new Exception(name + ": incorrect own-team cleanses");
         if (fight.Duration != TimeSpan.FromSeconds(withLocation ? 3 : 1) || fight.Teams.Count != 3)
             throw new Exception(name + ": invalid duration/team count");
         if (withLocation ? fight.Location?.Label != "BBL ~ Hills" : fight.Location is not null)
@@ -140,6 +150,15 @@ void Check(string name, uint red, uint blue, uint green, string mapping, bool wi
                 throw new Exception(name + ": incorrect " + color + " totals");
         }
     }
+}
+
+static byte[] Removal(byte state, ulong holder, ulong remover, uint skill, int duration)
+{
+    var bytes = Event(state, holder, remover, duration, time: 1350);
+    BinaryPrimitives.WriteUInt32LittleEndian(bytes.AsSpan(36), skill);
+    bytes[49] = 1;
+    bytes[52] = 1;
+    return bytes;
 }
 
 static byte[] Event(byte state, ulong source, ulong destination = 0, int value = 0, ulong time = 0)

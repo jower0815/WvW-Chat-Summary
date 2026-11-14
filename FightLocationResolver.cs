@@ -5,9 +5,12 @@ namespace WvWSummaryTool;
 internal static class FightLocationResolver
 {
     // ArenaNet API snapshot is embedded so parsing needs neither network access nor an API key.
-    private static readonly MapInfo[] Maps = ReadResource<MapInfo[]>("wvw-maps.json");
+    private static readonly MapInfo[] Maps = [.. ReadResource<MapInfo[]>("wvw-maps.json"),
+        .. ReadResource<MapInfo[]>("wvw-beta-maps.json")];
     private static readonly Objective[] Objectives = ReadResource<Objective[]>("wvw-objectives.json");
     private const double MaximumDistance = 12000; // game units; beyond this, only name the map
+    public static bool IsBetaMap(uint id) => id is 1651 or 1652 or 1654;
+    public static uint BackgroundMapId(uint id) => IsBetaMap(id) ? 1651U : id == 96 ? 95U : id;
 
     public static FightLocation? Resolve(IReadOnlyList<CombatEvent> events,
         IReadOnlyDictionary<ulong, Agent> agents, ulong povAddress, ulong start, ulong end)
@@ -16,7 +19,8 @@ internal static class FightLocationResolver
             .Select(e => (uint)e.SourceAgent).Distinct().ToArray();
         if (mapIds.Length != 1) return null;
         var mapId = mapIds[0];
-        var code = mapId switch { 38 => "EBG", 94 => "RBL", 95 => "GBL", 96 => "BBL", 1099 => "RBL", 968 => "EotM", _ => $"Map {mapId}" };
+        var code = mapId switch { 38 => "EBG", 94 => "RBL", 95 => "GBL", 96 => "BBL", 1099 => "RBL", 968 => "EotM",
+            1651 => "Seared G", 1652 => "Seared R", 1654 => "Seared B", _ => $"Map {mapId}" };
         var result = new FightLocation(mapId, code);
         var map = Maps.FirstOrDefault(m => m.id == mapId);
         if (map is null || events.Any(e => e.StateChange == 65 && e.SourceAgent != e.DestinationAgent)) return result;
@@ -44,6 +48,7 @@ internal static class FightLocationResolver
                 (map.map_rect[1][1] - players.Average(p => p.Y)) / (map.map_rect[1][1] - map.map_rect[0][1]));
         }).ToArray();
         if (route.Length > 0) result = result with { Track = route, TrackSource = source };
+        if (IsBetaMap(mapId)) return result; // No provisional objective names or proximity labels.
         if (track.Length < 3) return result;
 
         var objectives = Objectives.Where(o => o.map_id == mapId).Select(o => new
@@ -104,7 +109,7 @@ internal static class FightLocationResolver
         var width = map.continent_rect[1][0] - left;
         var height = map.continent_rect[1][1] - top;
         return new MapDisplay(left, top, width, height, map.default_floor,
-            Objectives.Where(o => o.map_id == id).Select(o => new MapMarker(ShortName(o.name, id),
+            Objectives.Where(o => !IsBetaMap(id) && o.map_id == id).Select(o => new MapMarker(ShortName(o.name, id),
                 (o.coord[0] - left) / width, (o.coord[1] - top) / height)).ToArray());
     }
 
